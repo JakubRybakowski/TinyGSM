@@ -48,7 +48,7 @@ uint32_t rate = 0; // Set to 0 for Auto-Detect
 void setup() {
   // Set console baud rate
   SerialMon.begin(115200);
-  delay(6000);
+  TINY_GSM_DELAY(6000);
 }
 
 void loop() {
@@ -63,7 +63,7 @@ void loop() {
     SerialMon.println(F("   Check your Serial wiring"));
     SerialMon.println(F("   Check the module is correctly powered and turned on"));
     SerialMon.println(F("***********************************************************"));
-    delay(30000L);
+    TINY_GSM_DELAY(30000L);
     return;
   }
 
@@ -83,6 +83,6 @@ void loop() {
     if (SerialMon.available()) {
       SerialAT.write(SerialMon.read());
     }
-    delay(0);
+    TINY_GSM_DELAY(0);
   }
 }

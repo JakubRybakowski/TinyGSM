@@ -294,7 +294,7 @@ class TinyGsmSequansMonarch
     sendAT(GF("+CFUN=1,1"));
     res = waitResponse(20000L, GF("+SYSSTART"), GFP(GSM_ERROR));
     if (res != 1 && res != 3) { return false; }
-    delay(1000);
+    TINY_GSM_DELAY(1000);
     return init(pin);
   }
 
@@ -495,7 +495,7 @@ class TinyGsmSequansMonarch
     bool connected = false;
     while (!connected && ((millis() - startMillis) < timeout_ms)) {
       connected = modemGetConnected(mux);
-      delay(100);  // socket may be in opening state
+      TINY_GSM_DELAY(100);  // socket may be in opening state
     }
     return connected;
   }
@@ -530,7 +530,7 @@ class TinyGsmSequansMonarch
     //     gotPrompt = true;
     //   }
     //   nAttempts--;
-    //   delay(50);
+    //   TINY_GSM_DELAY(50);
     // }
     // if (gotPrompt) {
     //   stream.write(reinterpret_cast<const uint8_t*>(buff), len);

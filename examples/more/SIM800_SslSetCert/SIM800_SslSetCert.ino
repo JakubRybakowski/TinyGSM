@@ -42,11 +42,11 @@
 void setup() {
   // Set console baud rate
   SerialMon.begin(115200);
-  delay(10);
+  TINY_GSM_DELAY(10);
 
   // Set GSM module baud rate
   SerialAT.begin(115200);
-  delay(6000);
+  TINY_GSM_DELAY(6000);
 
   SerialMon.println(F("Initializing modem..."));
   modem.init();
@@ -92,5 +92,5 @@ void loop() {
   if (SerialMon.available()) {
     SerialAT.write(SerialMon.read());
   }
-  delay(0);
+  TINY_GSM_DELAY(0);
 }

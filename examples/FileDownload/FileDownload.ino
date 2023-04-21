@@ -67,7 +67,7 @@ SoftwareSerial SerialAT(2, 3);  // RX, TX
 
 // Add a reception delay, if needed.
 // This may be needed for a fast processor at a slow baud rate.
-// #define TINY_GSM_YIELD() { delay(2); }
+// #define TINY_GSM_YIELD() { TINY_GSM_DELAY(2); }
 
 // Define how you're planning to connect to the internet.
 // This is only needed for this example, not in other code.
@@ -124,7 +124,7 @@ TinyGsmClient client(modem);
 void setup() {
   // Set console baud rate
   SerialMon.begin(115200);
-  delay(10);
+  TINY_GSM_DELAY(10);
 
   // !!!!!!!!!!!
   // Set your reset, enable, power pins here
@@ -134,7 +134,7 @@ void setup() {
 
   // Set GSM module baud rate
   SerialAT.begin(115200);
-  delay(6000);
+  TINY_GSM_DELAY(6000);
 
   // Restart takes quite some time
   // To skip it, call init() instead of restart()
@@ -169,7 +169,7 @@ void loop() {
   SerialMon.print(F("Setting SSID/password..."));
   if (!modem.networkConnect(wifiSSID, wifiPass)) {
     SerialMon.println(" fail");
-    delay(10000);
+    TINY_GSM_DELAY(10000);
     return;
   }
   SerialMon.println(" success");
@@ -183,7 +183,7 @@ void loop() {
   SerialMon.print("Waiting for network...");
   if (!modem.waitForNetwork()) {
     SerialMon.println(" fail");
-    delay(10000);
+    TINY_GSM_DELAY(10000);
     return;
   }
   SerialMon.println(" success");
@@ -196,7 +196,7 @@ void loop() {
   SerialMon.print(apn);
   if (!modem.gprsConnect(apn, gprsUser, gprsPass)) {
     SerialMon.println(" fail");
-    delay(10000);
+    TINY_GSM_DELAY(10000);
     return;
   }
   SerialMon.println(" success");
@@ -208,7 +208,7 @@ void loop() {
   SerialMon.print(server);
   if (!client.connect(server, port)) {
     SerialMon.println(" fail");
-    delay(10000);
+    TINY_GSM_DELAY(10000);
     return;
   }
   SerialMon.println(" success");
@@ -352,5 +352,5 @@ void loop() {
   SerialMon.println("s");
 
   // Do nothing forevermore
-  while (true) { delay(1000); }
+  while (true) { TINY_GSM_DELAY(1000); }
 }

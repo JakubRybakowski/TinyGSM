@@ -59,11 +59,11 @@ const char resource[] = "/TinyGSM/logo.txt";
 void setup() {
   // Set console baud rate
   SerialMon.begin(115200);
-  delay(10);
+  TINY_GSM_DELAY(10);
 
   // Set up Passthrough
   HologramCloud.enterPassthrough();
-  delay(6000);
+  TINY_GSM_DELAY(6000);
 
   // Restart takes quite some time
   // To skip it, call init() instead of restart()
@@ -82,7 +82,7 @@ void loop() {
   SerialMon.print(F("Waiting for network..."));
   if (!mdm.waitForNetwork()) {
     SerialMon.println(" fail");
-    delay(10000);
+    TINY_GSM_DELAY(10000);
     return;
   }
   SerialMon.println(" success");
@@ -91,7 +91,7 @@ void loop() {
   SerialMon.print(apn);
   if (!mdm.gprsConnect(apn, user, pass)) {
     SerialMon.println(" fail");
-    delay(10000);
+    TINY_GSM_DELAY(10000);
     return;
   }
   SerialMon.println(" success");
@@ -100,7 +100,7 @@ void loop() {
   SerialMon.print(server);
   if (!client.connect(server, port)) {
     SerialMon.println(" fail");
-    delay(10000);
+    TINY_GSM_DELAY(10000);
     return;
   }
   SerialMon.println(" success");
@@ -131,6 +131,6 @@ void loop() {
 
   // Do nothing forevermore
   while (true) {
-    delay(1000);
+    TINY_GSM_DELAY(1000);
   }
 }

@@ -67,7 +67,7 @@ SoftwareSerial SerialAT(2, 3);  // RX, TX
 #define GSM_AUTOBAUD_MAX 115200
 
 // Add a reception delay - may be needed for a fast processor at a slow baud
-// rate #define TINY_GSM_YIELD() { delay(2); }
+// rate #define TINY_GSM_YIELD() { TINY_GSM_DELAY(2); }
 
 // Uncomment this if you want to use SSL
 // #define USE_SSL
@@ -126,7 +126,7 @@ const int      port = 80;
 void setup() {
   // Set console baud rate
   SerialMon.begin(115200);
-  delay(10);
+  TINY_GSM_DELAY(10);
 
   // !!!!!!!!!!!
   // Set your reset, enable, power pins here
@@ -137,7 +137,7 @@ void setup() {
   // Set GSM module baud rate
   TinyGsmAutoBaud(SerialAT, GSM_AUTOBAUD_MIN, GSM_AUTOBAUD_MAX);
   // SerialAT.begin(9600);
-  delay(6000);
+  TINY_GSM_DELAY(6000);
 }
 
 void loop() {
@@ -154,7 +154,7 @@ void loop() {
     SerialMon.println(F(" Do you use a good, stable power source?"));
     SerialMon.println(F(" Try using File -> Examples -> TinyGSM -> tools -> AT_Debug to find correct configuration"));
     SerialMon.println(F("************************"));
-    delay(10000);
+    TINY_GSM_DELAY(10000);
     return;
   }
   SerialMon.println(F(" [OK]"));
@@ -173,7 +173,7 @@ void loop() {
   SerialMon.print(F("Setting SSID/password..."));
   if (!modem.networkConnect(wifiSSID, wifiPass)) {
     SerialMon.println(" fail");
-    delay(10000);
+    TINY_GSM_DELAY(10000);
     return;
   }
   SerialMon.println(" success");
@@ -194,7 +194,7 @@ void loop() {
     SerialMon.println(F(" Is antenna attached?"));
     SerialMon.println(F(" Does the SIM card work with your phone?"));
     SerialMon.println(F("************************"));
-    delay(10000);
+    TINY_GSM_DELAY(10000);
     return;
   }
   SerialMon.println(F(" [OK]"));
@@ -209,7 +209,7 @@ void loop() {
     SerialMon.println(F(" Is GPRS enabled by network provider?"));
     SerialMon.println(F(" Try checking your card balance."));
     SerialMon.println(F("************************"));
-    delay(10000);
+    TINY_GSM_DELAY(10000);
     return;
   }
   SerialMon.println(F(" [OK]"));
@@ -223,7 +223,7 @@ void loop() {
   SerialMon.print(server);
   if (!client.connect(server, port)) {
     SerialMon.println(F(" [fail]"));
-    delay(10000);
+    TINY_GSM_DELAY(10000);
     return;
   }
   SerialMon.println(F(" [OK]"));
@@ -235,7 +235,7 @@ void loop() {
 
   // Wait for data to arrive
   while (client.connected() && !client.available()) {
-    delay(100);
+    TINY_GSM_DELAY(100);
     SerialMon.print('.');
   };
   SerialMon.println();
@@ -277,5 +277,5 @@ void loop() {
   SerialMon.println(F("************************"));
 
   // Do nothing forevermore
-  while (true) { delay(1000); }
+  while (true) { TINY_GSM_DELAY(1000); }
 }

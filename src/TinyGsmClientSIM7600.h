@@ -230,7 +230,7 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
     if (!testAT()) { return false; }
     sendAT(GF("+CRESET"));
     if (waitResponse(10000L) != 1) { return false; }
-    delay(5000L);  // TODO(?):  Test this delay!
+    TINY_GSM_DELAY(5000L);  // TODO(?):  Test this delay!
     return init(pin);
   }
 
@@ -241,7 +241,7 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
 
   bool radioOffImpl() {
     if (!setPhoneFunctionality(4)) { return false; }
-    delay(3000);
+    TINY_GSM_DELAY(3000);
     return true;
   }
 

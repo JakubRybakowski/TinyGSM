@@ -32,7 +32,7 @@ void setup() {
 
   MODEM_TX.begin(BAUD_RATE);
   BOARD_TX.begin(BAUD_RATE);
-  delay(6000);
+  TINY_GSM_DELAY(6000);
 }
 
 void loop()

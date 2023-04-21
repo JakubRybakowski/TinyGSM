@@ -81,7 +81,7 @@ class TinyGsmModem {
     return thisModem().waitForNetworkImpl(timeout_ms, check_signal);
   }
   // Gets signal quality report
-  int16_t getSignalQuality() {
+  int8_t getSignalQuality() {
     return thisModem().getSignalQualityImpl();
   }
   String getLocalIP() {
@@ -115,7 +115,7 @@ class TinyGsmModem {
     for (uint32_t start = millis(); millis() - start < timeout_ms;) {
       thisModem().sendAT(GF(""));
       if (thisModem().waitResponse(200) == 1) { return true; }
-      delay(100);
+      TINY_GSM_DELAY(100);
     }
     return false;
   }
@@ -168,7 +168,7 @@ class TinyGsmModem {
  protected:
   bool radioOffImpl() {
     if (!thisModem().setPhoneFunctionality(0)) { return false; }
-    delay(3000);
+    TINY_GSM_DELAY(3000);
     return true;
   }
 
@@ -202,7 +202,7 @@ class TinyGsmModem {
     for (uint32_t start = millis(); millis() - start < timeout_ms;) {
       if (check_signal) { thisModem().getSignalQuality(); }
       if (thisModem().isNetworkConnected()) { return true; }
-      delay(250);
+      TINY_GSM_DELAY(250);
     }
     return false;
   }

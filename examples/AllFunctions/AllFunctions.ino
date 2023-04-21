@@ -60,7 +60,7 @@ SoftwareSerial SerialAT(2, 3);  // RX, TX
 
 // Add a reception delay, if needed.
 // This may be needed for a fast processor at a slow baud rate.
-// #define TINY_GSM_YIELD() { delay(2); }
+// #define TINY_GSM_YIELD() { TINY_GSM_DELAY(2); }
 
 /*
  * Tests enabled
@@ -128,14 +128,14 @@ TinyGsm        modem(SerialAT);
 void setup() {
   // Set console baud rate
   SerialMon.begin(115200);
-  delay(10);
+  TINY_GSM_DELAY(10);
 
   // !!!!!!!!!!!
   // Set your reset, enable, power pins here
   // !!!!!!!!!!!
 
   DBG("Wait...");
-  delay(6000);
+  TINY_GSM_DELAY(6000);
 
   // Set GSM module baud rate
   TinyGsmAutoBaud(SerialAT, GSM_AUTOBAUD_MIN, GSM_AUTOBAUD_MAX);
@@ -169,7 +169,7 @@ void loop() {
   DBG("Setting SSID/password...");
   if (!modem.networkConnect(wifiSSID, wifiPass)) {
     DBG(" fail");
-    delay(10000);
+    TINY_GSM_DELAY(10000);
     return;
   }
   SerialMon.println(" success");
@@ -182,7 +182,7 @@ void loop() {
 
   DBG("Waiting for network...");
   if (!modem.waitForNetwork(600000L, true)) {
-    delay(10000);
+    TINY_GSM_DELAY(10000);
     return;
   }
 
@@ -191,7 +191,7 @@ void loop() {
 #if TINY_GSM_TEST_GPRS
   DBG("Connecting to", apn);
   if (!modem.gprsConnect(apn, gprsUser, gprsPass)) {
-    delay(10000);
+    TINY_GSM_DELAY(10000);
     return;
   }
 
@@ -241,7 +241,7 @@ void loop() {
     uint32_t start = millis();
     while (client.connected() && !client.available() &&
            millis() - start < 30000L) {
-      delay(100);
+      TINY_GSM_DELAY(100);
     };
 
     // Read data
@@ -280,7 +280,7 @@ void loop() {
     uint32_t startS = millis();
     while (secureClient.connected() && !secureClient.available() &&
            millis() - startS < 30000L) {
-      delay(100);
+      TINY_GSM_DELAY(100);
     };
 
     // Read data
@@ -312,7 +312,7 @@ void loop() {
   DBG("Call:", res ? "OK" : "fail");
 
   if (res) {
-    delay(1000L);
+    TINY_GSM_DELAY(1000L);
 
     // Play DTMF A, duration 1000ms
     modem.dtmfSend('A', 1000);
@@ -320,7 +320,7 @@ void loop() {
     // Play DTMF 0..4, default duration (100ms)
     for (char tone = '0'; tone <= '4'; tone++) { modem.dtmfSend(tone); }
 
-    delay(5000);
+    TINY_GSM_DELAY(5000);
 
     res = modem.callHangup();
     DBG("Hang up:", res ? "OK" : "fail");
@@ -364,7 +364,7 @@ void loop() {
       break;
     } else {
       DBG("Couldn't get GSM location, retrying in 15s.");
-      delay(15000L);
+      TINY_GSM_DELAY(15000L);
     }
   }
   DBG("Retrieving GSM location again as a string");
@@ -375,7 +375,7 @@ void loop() {
 #if TINY_GSM_TEST_GPS && defined TINY_GSM_MODEM_HAS_GPS
   DBG("Enabling GPS/GNSS/GLONASS and waiting 15s for warm-up");
   modem.enableGPS();
-  delay(15000L);
+  TINY_GSM_DELAY(15000L);
   float lat2      = 0;
   float lon2      = 0;
   float speed2    = 0;
@@ -402,7 +402,7 @@ void loop() {
       break;
     } else {
       DBG("Couldn't get GPS/GNSS/GLONASS location, retrying in 15s.");
-      delay(15000L);
+      TINY_GSM_DELAY(15000L);
     }
   }
   DBG("Retrieving GPS/GNSS/GLONASS location again as a string");
@@ -435,7 +435,7 @@ void loop() {
       break;
     } else {
       DBG("Couldn't get network time, retrying in 15s.");
-      delay(15000L);
+      TINY_GSM_DELAY(15000L);
     }
   }
   DBG("Retrieving time again as a string");
@@ -462,7 +462,7 @@ void loop() {
 
 #if TINY_GSM_TEST_GPRS
   modem.gprsDisconnect();
-  delay(5000L);
+  TINY_GSM_DELAY(5000L);
   if (!modem.isGprsConnected()) {
     DBG("GPRS disconnected");
   } else {

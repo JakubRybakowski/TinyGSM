@@ -48,11 +48,11 @@ TinyGsm modem(debugger);
 void setup() {
   // Set console baud rate
   SerialMon.begin(115200);
-  delay(10);
+  TINY_GSM_DELAY(10);
 
   // Set GSM module baud rate
   SerialAT.begin(9600);
-  delay(6000);
+  TINY_GSM_DELAY(6000);
 
   if (!modem.init()) {
     SerialMon.println(F("***********************************************************"));

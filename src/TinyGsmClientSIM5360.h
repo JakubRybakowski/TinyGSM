@@ -236,7 +236,7 @@ class TinyGsmSim5360 : public TinyGsmModem<TinyGsmSim5360>,
 
   bool radioOffImpl() {
     if (!setPhoneFunctionality(4)) { return false; }
-    delay(3000);
+    TINY_GSM_DELAY(3000);
     return true;
   }
 

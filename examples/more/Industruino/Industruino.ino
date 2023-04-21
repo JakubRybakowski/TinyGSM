@@ -67,16 +67,16 @@ void setup() {
   // Turn on modem with 1 second pulse on D6
   pinMode(6, OUTPUT);
   digitalWrite(6, HIGH);
-  delay(1000);
+  TINY_GSM_DELAY(1000);
   digitalWrite(6, LOW);
 
   // Set console baud rate
   SerialMon.begin(115200);
-  delay(10);
+  TINY_GSM_DELAY(10);
 
   // Set GSM module baud rate
   SerialAT.begin(115200);
-  delay(6000);
+  TINY_GSM_DELAY(6000);
 
   // Restart takes quite some time
   // To skip it, call init() instead of restart()
@@ -95,7 +95,7 @@ void loop() {
   SerialMon.print(F("Waiting for network..."));
   if (!modem.waitForNetwork()) {
     SerialMon.println(" fail");
-    delay(10000);
+    TINY_GSM_DELAY(10000);
     return;
   }
   SerialMon.println(" success");
@@ -104,7 +104,7 @@ void loop() {
   SerialMon.print(apn);
   if (!modem.gprsConnect(apn, user, pass)) {
     SerialMon.println(" fail");
-    delay(10000);
+    TINY_GSM_DELAY(10000);
     return;
   }
   SerialMon.println(" success");
@@ -113,14 +113,14 @@ void loop() {
   int err = http.get(resource);
   if (err != 0) {
     SerialMon.println(F("failed to connect"));
-    delay(10000);
+    TINY_GSM_DELAY(10000);
     return;
   }
 
   int status = http.responseStatusCode();
   SerialMon.println(status);
   if (!status) {
-    delay(10000);
+    TINY_GSM_DELAY(10000);
     return;
   }
 
@@ -156,6 +156,6 @@ void loop() {
 
   // Do nothing forevermore
   while (true) {
-    delay(1000);
+    TINY_GSM_DELAY(1000);
   }
 }

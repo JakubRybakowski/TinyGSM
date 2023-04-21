@@ -183,7 +183,7 @@ class TinyGsmSim800 : public TinyGsmModem<TinyGsmSim800>,
     if (waitResponse(10000L) != 1) { return false; }
 
     // Enable battery checks
-    sendAT(GF("+CBATCHK=1"));
+    sendAT(GF("+CBATCHK=0"));
     waitResponse();
 
     SimStatus ret = getSimStatus();
@@ -259,7 +259,7 @@ class TinyGsmSim800 : public TinyGsmModem<TinyGsmSim800>,
     waitResponse();
     if (!setPhoneFunctionality(0)) { return false; }
     if (!setPhoneFunctionality(1, true)) { return false; }
-    delay(3000);
+    TINY_GSM_DELAY(3000);
     return init(pin);
   }
 
@@ -479,7 +479,7 @@ class TinyGsmSim800 : public TinyGsmModem<TinyGsmSim800>,
 
   bool playToolkitTone(uint8_t tone, uint32_t duration) {
     sendAT(GF("STTONE="), 1, tone);
-    delay(duration);
+    TINY_GSM_DELAY(duration);
     sendAT(GF("STTONE="), 0);
     return waitResponse();
   }
